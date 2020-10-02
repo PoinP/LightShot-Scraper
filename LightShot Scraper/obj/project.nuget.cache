@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VaLRDCTKMuze0P5acTnzKDpdUPauFgKln9m9Hm/U3DIJkEHSnNmSIOhqq/0KO9YxGRxrfHYzYaLTRXv8Fmn4dQ==",
+  "dgSpecHash": "Jd+pGjgqBHCG4Nw6LWLBYpFFIx5MUygFEf4yOs1PuF5vvZ/vEtvrZn/NgEvw6vYPN+NpWwc7TdoUETdvZf3rfw==",
   "success": true,
-  "projectFilePath": "D:\\Programming\\C#\\LightShot GitHub\\LightShot Image Scraper\\LightShotScraper\\LightShot Scraper\\LightShotScraper.csproj",
+  "projectFilePath": "D:\\Programming\\C#\\LightShot Image Scraper\\LightShotScraper\\LightShot Scraper\\LightShotScraper.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Blair\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\Blair\\.nuget\\packages\\microsoft.netcore.targets\\1.1.3\\microsoft.netcore.targets.1.1.3.nupkg.sha512",

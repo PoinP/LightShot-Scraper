@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LightShot_Scraper;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -12,86 +13,59 @@ namespace LightShotScraper
 {
     class ImageDownloader : WebClientService
     {
-        private HtmlParser _htmlParser;
         private string _path;
+        private LightshotImage _image;
 
         public ImageDownloader(string path = "") : base()
         {
-            _htmlParser = new HtmlParser();
             _path = path;
         }
 
-        public void DownloadImage(Uri uri)
+        public LightshotImage DownloadImage(Uri uri)
         {
-            var imageUri = _htmlParser.GetImageUrl(uri);
-            SaveImage(uri, imageUri);
+            _image = new LightshotImage(uri);
+            return SaveImage();
         }
 
-        public async Task DownloadImageAsync(Uri uri)
+        public List<LightshotImage> DownloadImagesAsync(List<Uri> uris, ProgressModule progress)
         {
-            var imageUri = await _htmlParser.GetImageUrlAsync(uri);
-            SaveImage(uri, imageUri);
-        }
-
-        public void DownloadImagesAsync(List<Uri> uris)
-        {
+            var images = new List<LightshotImage>();
+            int count = 0;
             foreach (var uri in uris)
             {
-                DownloadImage(uri);
-                Console.WriteLine(uri.AbsoluteUri.Split("sc/")[1]);
+                count++;
+                _image = new LightshotImage(uri);
+                images.Add(DownloadImage(uri));
+                progress.Report((count * 100) / uris.Count, _image);
             }
+
+            return images;
+        }
+        private string GetFilePath()
+        {
+            return $@"{_path}\{_image.Name}.{_image.Format}";
         }
 
-        private ImageFormat GetImageFormatFromUri(Uri uri)
+        private LightshotImage SaveImage()
         {
-            string url = uri.AbsoluteUri;
-            int dotFormatIndex = url.LastIndexOf('.');
+            var imagePath = GetFilePath();
 
-            string imageFormatString = url.Substring(dotFormatIndex + 1).FirstCharToUpper();
-
-            return SeekFormat(imageFormatString);
-        }
-
-        private string GetFilePath(Uri linkUri, Uri imageUri)
-        {
-            string fileName = linkUri.AbsoluteUri.Split("sc/")[1];
-            string fileFormat = GetImageFormatFromUri(imageUri).ToString();
-
-            return $@"{_path}\{fileName}.{fileFormat}";
-        }
-
-        private void SaveImage(Uri linkUri, Uri imageUri)
-        {
-            var imageFormat = GetImageFormatFromUri(imageUri);
-            var imagePath = GetFilePath(linkUri, imageUri);
-
-            if(imageUri.AbsoluteUri.Contains("st.prntscr.com/2020/08/01/0537/img/0_173a7b_211be8ff.png"))
+            if(_image.Uri.AbsoluteUri.Contains("st.prntscr.com/2020/08/01/0537/img/0_173a7b_211be8ff.png"))
             {
-                return;
+                return null;
             }
 
-            using var stream = _webClient.OpenRead(imageUri.AbsoluteUri);
+            using var stream = _webClient.OpenRead(_image.Uri.AbsoluteUri);
+            var imageSize = Convert.ToInt64(_webClient.ResponseHeaders["Content-Length"]);
+            _image.SetFileSize(imageSize);
             Bitmap bitmap = new Bitmap(stream);
 
             if (bitmap != null)
             {
-                bitmap.Save(imagePath, imageFormat);
+                bitmap.Save(imagePath, _image.Format);
             }
-        }
 
-        private ImageFormat SeekFormat(string formatString) =>
-            formatString switch
-            {
-                "Bmp" => ImageFormat.Bmp,
-                "Emf" => ImageFormat.Emf,
-                "Exif" => ImageFormat.Exif,
-                "Gif" => ImageFormat.Gif,
-                "Icon" => ImageFormat.Icon,
-                "Jpeg" => ImageFormat.Jpeg,
-                "Png" => ImageFormat.Png,
-                "Tiff" => ImageFormat.Tiff,
-                "Wmf" => ImageFormat.Wmf,
-                 _   => throw new ArgumentException("No such format exists!")
-            };
+            return _image;
+        }
     }
 }

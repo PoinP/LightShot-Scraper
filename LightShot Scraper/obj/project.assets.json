@@ -280,11 +280,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Programming\\C#\\LightShot GitHub\\LightShot Image Scraper\\LightShotScraper\\LightShot Scraper\\LightShotScraper.csproj",
+      "projectUniqueName": "D:\\Programming\\C#\\LightShot Image Scraper\\LightShotScraper\\LightShot Scraper\\LightShotScraper.csproj",
       "projectName": "LightShotScraper",
-      "projectPath": "D:\\Programming\\C#\\LightShot GitHub\\LightShot Image Scraper\\LightShotScraper\\LightShot Scraper\\LightShotScraper.csproj",
+      "projectPath": "D:\\Programming\\C#\\LightShot Image Scraper\\LightShotScraper\\LightShot Scraper\\LightShotScraper.csproj",
       "packagesPath": "C:\\Users\\Blair\\.nuget\\packages\\",
-      "outputPath": "D:\\Programming\\C#\\LightShot GitHub\\LightShot Image Scraper\\LightShotScraper\\LightShot Scraper\\obj\\",
+      "outputPath": "D:\\Programming\\C#\\LightShot Image Scraper\\LightShotScraper\\LightShot Scraper\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"
