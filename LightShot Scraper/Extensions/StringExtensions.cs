@@ -8,7 +8,7 @@ namespace System
     static class StringExtensions
     {
         /// <summary>
-        /// Get's the string between two substrings.
+        /// Gets the string between two substrings.
         /// </summary>
         /// <param name="str">The whole string.</param>
         /// <param name="firstSubstring">The first substring.</param>
