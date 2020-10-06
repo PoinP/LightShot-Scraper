@@ -1,4 +1,5 @@
 ﻿using LightShotScraper.Utility;
+using System;
 
 namespace LightShotScraper.Core
 {
@@ -6,6 +7,8 @@ namespace LightShotScraper.Core
     {
         static void Main(string[] args)
         {
+            Console.Title = "PoinP's Lightshot scraper";
+
             var directory = UserPrompt.GetDirectory();
 
             while (true)

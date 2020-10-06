@@ -5,15 +5,37 @@ using LightShotScraper.Core;
 
 namespace LightShotScraper
 {
+    /// <summary>
+    /// Image properties.
+    /// </summary>
     public class LightshotImage
     {
+        /// <summary>
+        /// Image url.
+        /// </summary>
         public string Url { get; private set; }
+        /// <summary>
+        /// Image uri.
+        /// </summary>
         public Uri Uri { get; private set; }
+        /// <summary>
+        /// Image's name.
+        /// </summary>
         public string Name { get; private set; }
+        /// <summary>
+        /// Image's size.
+        /// </summary>
         public string Size { get; private set; }
+        /// <summary>
+        /// Image's format.
+        /// </summary>
         public ImageFormat Format { get; private set; }
 
 
+        /// <summary>
+        /// Ctor that sets the image's properties.
+        /// </summary>
+        /// <param name="url">An image's url.</param>
         public LightshotImage(string url)
         {
             HtmlParser parser = new HtmlParser();
@@ -23,7 +45,11 @@ namespace LightShotScraper
             Name = url.Split("sc/")[1];
             Format = GetImageFormatFromUrl();
         }
-        
+
+        /// <summary>
+        /// Ctor that sets the image's properties.
+        /// </summary>
+        /// <param name="uri">An image's uri.</param>
         public LightshotImage(Uri uri)
         {
             HtmlParser parser = new HtmlParser();
@@ -33,6 +59,10 @@ namespace LightShotScraper
             Format = GetImageFormatFromUrl();
         }
 
+        /// <summary>
+        /// Sets the size of an image.
+        /// </summary>
+        /// <param name="bytes">Size in bytes.</param>
         public void SetFileSize(long bytes)
         {
             Unit unit = Unit.B;
@@ -68,6 +98,10 @@ namespace LightShotScraper
             Size = $"{Math.Round(size, 2)} {unit}";
         }
 
+        /// <summary>
+        /// Gets an image's foprmat from it's url.
+        /// </summary>
+        /// <returns>The image's format.</returns>
         private ImageFormat GetImageFormatFromUrl()
         {
             int dotFormatIndex = Url.LastIndexOf('.');
@@ -77,6 +111,11 @@ namespace LightShotScraper
             return SeekFormat(imageFormatString);
         }
 
+        /// <summary>
+        /// Gets the image format as an ImageFormat object.
+        /// </summary>
+        /// <param name="formatString">Image's format in string variant.</param>
+        /// <returns>An ImageFormat object with the image's format.</returns>
         private ImageFormat SeekFormat(string formatString) =>
             formatString switch
             {

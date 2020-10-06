@@ -5,15 +5,29 @@ using System.Collections.Generic;
 
 namespace LightShotScraper.Core
 {
+    /// <summary>
+    /// Parses the html data of a Lightshot url.
+    /// </summary>
     class HtmlParser : WebClientService
     {
+        /// <summary>
+        /// Checks if the web agent has been changed.
+        /// </summary>
         bool isUserAgentChanged;
 
+        /// <summary>
+        /// Ctor
+        /// </summary>
         public HtmlParser() : base()
         {
             isUserAgentChanged = false;
         }
 
+        /// <summary>
+        /// Gets the image uri from a Ligtshot uri.
+        /// </summary>
+        /// <param name="uri">Lightshot uri.</param>
+        /// <returns>The image uri.</returns>
         public Uri GetImageUrl(Uri uri)
         {
             var htmlData = _webClient.DownloadString(uri);
@@ -27,6 +41,11 @@ namespace LightShotScraper.Core
             return ParseImageUrl(htmlData);
         }
 
+        /// <summary>
+        /// Gets the image uri from a Ligtshot url.
+        /// </summary>
+        /// <param name="uri">Lightshot uri.</param>
+        /// <returns>The image uri.</returns>
         public Uri GetImageUrl(string url)
         {
             if(!Uri.IsWellFormedUriString(url, UriKind.Absolute))
@@ -39,6 +58,11 @@ namespace LightShotScraper.Core
             return GetImageUrl(uri);
         }
 
+        /// <summary>
+        /// Gets the image uri from a Ligtshot uri asynchronously.
+        /// </summary>
+        /// <param name="uri">Lightshot uri.</param>
+        /// <returns>The image uri.</returns>
         public async Task<Uri> GetImageUrlAsync(Uri uri)
         {
             var htmlData = await _webClient.DownloadStringTaskAsync(uri);
@@ -46,6 +70,11 @@ namespace LightShotScraper.Core
             return ParseImageUrl(htmlData);
         }
 
+        /// <summary>
+        /// Gets the uri of the images from a Ligtshot uri list asynchronously.
+        /// </summary>
+        /// <param name="uri">Lightshot uri.</param>
+        /// <returns>The image uri.</returns>
         public async Task<List<Uri>> GetImagesUrlsAsync(List<Uri> uris)
         {
             List<Task<Uri>> tasks = new List<Task<Uri>>();
@@ -60,6 +89,11 @@ namespace LightShotScraper.Core
             return parsedUris.ToList();
         }
 
+        /// <summary>
+        /// Parses the HTML data of a Lightshot url.
+        /// </summary>
+        /// <param name="url">Ligthshot url.</param>
+        /// <returns>The image's url.</returns>
         private Uri ParseImageUrl(string url)
         {
             var imageUrl = url
